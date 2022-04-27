@@ -1,0 +1,4 @@
+http://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/example_schemagen_basic.html
+
+Usar 'schemagen' para gerar .xsd
+Usar xjc para gerar as classes
