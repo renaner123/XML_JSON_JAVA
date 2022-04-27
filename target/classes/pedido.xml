@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pedido id="1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="pedido.xsd">
+  <cliente>João</cliente>
+  <destino>
+    <nome>Maria</nome>
+    <endereco>SCS 1</endereco>
+    <cidade>Brasília</cidade>
+  </destino>
+  <item>
+    <produto>Apostila Java</produto>
+    <quantidade>1</quantidade>
+    <preco>10.90</preco>
+  </item>
+  <item>
+    <produto>Apostila Javascript</produto>
+    <quantidade>1</quantidade>
+    <preco>9.90</preco>
+  </item>
+</pedido>

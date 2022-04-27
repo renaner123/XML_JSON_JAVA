@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+   <name>ABCDEFG Enterprise</name>
+   <staff id="1">
+      <name>mkyong</name>
+      <Salary>8000 &amp; Bonus</Salary>
+      <bio><![CDATA[<h1>support</h1>]]></bio>
+      <joinDate>2021-04-27T10:49:24.1998014-03:00</joinDate>
+   </staff>
+   <staff id="2">
+      <name>yflow</name>
+      <Salary>9000</Salary>
+      <bio><![CDATA[<h1>developer & database</h1>]]></bio>
+      <joinDate>2021-10-27T10:49:24.1998014-03:00</joinDate>
+   </staff>
+</company>
