@@ -118,7 +118,7 @@ Ao usar esses conectores, é necessário usar a tag <xsd:complexType> ao montar 
 
 É uma forma de acessar e manipular arquivos XML.
 
-Um exemplo de utilização pode ser visto no [arquivo](src\main\java\DOMParser\XmlPOJODOM.java). Método main le o [file_amostra.xml](src\main\resources\file_amostra.xml) e percore todos os elementos filhos e adiciona em uma lista de [Employee](src\main\java\DOMParser\Employee.java). As classes usadas são:
+Um exemplo de utilização pode ser visto no [arquivo](src/main/java/DOMParser/XmlPOJODOM.java). Método main le o [file_amostra.xml](src/main/resources/file_amostra.xml) e percore todos os elementos filhos e adiciona em uma lista de [Employee](src/main/java/DOMParser/Employee.java). As classes usadas são:
 
 Definições de acordo com Oracle
 * DocumentBuilderFactory - Defines a factory API that enables applications to obtain a parser that produces DOM object trees from XML documents.
