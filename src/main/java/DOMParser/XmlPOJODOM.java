@@ -14,7 +14,6 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.OutputStream;
 
 public class XmlPOJODOM {
     List<Employee> employees = new ArrayList<>();    
@@ -44,10 +43,10 @@ public class XmlPOJODOM {
 	        employee.appendChild(elemsalary);        
 	   
 		try {    
-	        writeXml(document, "C:/Users/renan/Documents/workspace-spring-tool-suite-4-4.13.0.RELEASE/ProvaNina/src/trainingXml/file_amostra3.xml");	              
+	        writeXml(document, "src/main/resources/file_amostra3.xml");	              
 	        System.out.println("Deu");
 		} catch (TransformerException e) {
-			System.out.println("N�o eu");
+			System.out.println(e.getMessage());
 		}
 	}	
 	
@@ -78,7 +77,7 @@ public class XmlPOJODOM {
         	XmlPOJODOM pojo = new XmlPOJODOM() ;
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File("C:/Users/renan/Documents/workspace-spring-tool-suite-4-4.13.0.RELEASE/ProvaNina/src/trainingXml/file_amostra.xml"));
+            Document document = builder.parse(new File("src/main/resources/file_amostra.xml"));
             NodeList nodeList = document.getDocumentElement().getChildNodes();
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
@@ -104,51 +103,3 @@ public class XmlPOJODOM {
     }	
 }
 
-class Employee {
-	
-    private String Firstname;
-    private String Lastname;
-    private double salary;
-    
-    public Employee() {
-
-    }
-    
-    public Employee(String Firstname, String Lastname, double salary) {
-        this.Firstname = Firstname;
-        this.Lastname = Lastname;
-        this.salary = salary;
-    }
-    @Override
-    public String toString() {
-        return "[" + Firstname + ", " + Lastname + ", "+ salary + "]";
-    }
-
-	public String getFirstname() {
-		return Firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		Firstname = firstname;
-	}
-
-	public String getLastname() {
-		return Lastname;
-	}
-
-	public void setLastname(String lastname) {
-		Lastname = lastname;
-	}
-
-	public double getSalary() {
-		return salary;
-	}
-
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
-    
-    
-    
-    
-}
