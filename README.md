@@ -1,26 +1,19 @@
-# Compilado de exemplos de leitura e escrita de arquivos XML e Json em um projeto Maven
+# Compilado de exemplos de leitura e escrita de arquivos XML e Json em um projeto Maven/Java
 
+## Sumário
 
-## XML - eXtensible Markup Language
-
-É uma linguagem de marcação composta por diversos elementos para facilitar o compartilhamento de informações por intermédio da internet.
-
-Um elemento pode conter:
-* Texto
-* Atributos
-* Outros elementos
-
-
-Elementos XML devem seguir estas regras de nomenclatura:
-* Os nomes dos elementos são case-sensitive
-* Os nomes dos elementos deve começar com uma letra ou  sublinhado
-* Os nomes dos elementos não pode começar com o xml letras (or XML, or Xml, etc)
-* Os nomes dos elementos podem conter letras, números, hífens, sublinhados e períodos
-* Os nomes dos elementos não podem conter espaços
-  
-Estrutura básica de um XML
-
-![](src/main/resources/xml.png)
+<!--ts-->
+   * [Dependências Maven](#Dependências)  
+   * [XML](#XML---eXtensible-Markup-Language)
+     * [XSD](#XSD)
+     * [XML DOM](#XML-DOM---Document-Object-Model)
+     * [JAXB](#JAXB)
+     * [Validar um arquivo XML](#Validar-um-arquivo-XML)
+   * [Json](#Json---JavaScript-Object-Notation) 
+     * [Json para objeto Java](#Json-para-objeto-Java)
+     * [Objeto Java para Json](#Objeto-Java-para-Json )
+   * [Referências](#Referências)
+<!--te-->
 
 ## Dependências 
 
@@ -65,10 +58,31 @@ Dependências necessárias para executar os exemplos usando Json.
 	</dependency>	
 ```  
 
-Outras dependências e informações podem ser inseridas no arquivo [POM](src/../pom.xml).
+Outras dependências e informações podem ser inseridas no arquivo [POM](src/../pom.xml). Os arquivos utilizados para os exemplos estão em [resources](src/main/resources/)
 
 
-## XSD
+## XML - eXtensible Markup Language
+
+É uma linguagem de marcação composta por diversos elementos para facilitar o compartilhamento de informações por intermédio da internet.
+
+Um elemento pode conter:
+* Texto
+* Atributos
+* Outros elementos
+
+
+Elementos XML devem seguir estas regras de nomenclatura:
+* Os nomes dos elementos são case-sensitive
+* Os nomes dos elementos deve começar com uma letra ou  sublinhado
+* Os nomes dos elementos não pode começar com o xml letras (or XML, or Xml, etc)
+* Os nomes dos elementos podem conter letras, números, hífens, sublinhados e períodos
+* Os nomes dos elementos não podem conter espaços
+  
+Estrutura básica de um XML
+
+![](src/main/resources/xml.png)
+
+### XSD
 
 Arquivo utilizado para validar as informações de um arquivo XML, pode ser usado para verificar os campos, se está na ordem correta, tipo correto por exemplo. Abaixo segue alguns exemplos de declarçaão de elementos e atributos.
 
@@ -114,7 +128,7 @@ Ao usar esses conectores, é necessário usar a tag <xsd:complexType> ao montar 
 </xsd:element>
 ```
 
-### XML DOM(Document Object Model)
+### XML DOM - Document Object Model
 
 É uma forma de acessar e manipular arquivos XML.
 
@@ -133,11 +147,111 @@ Para fim de teste, após ler esse arquivo é usado o método insertEmployeeXml("
 
 ### JAXB
 
+Fornece suporte a manipulação de objetos Java. "Sua principal característica é a capacidade de vincular XML a objetos Java e vice-versa". Na classe [ObjectToXml](src/main/java/xmljaxb/ObjectToXml.java) contém um exemplo de como transformar um objeto java em um arquivo XML usando Marshaller e na classe [XmlToObject](src/main/java/xmljaxb/XmlToObject.java) possui um exemplo de como ler um arquivo XML e transformar em um objeto Java. 
   
+### Objeto Java para XML
+
+```Java
+        JAXBContext jaxbContext = null;
+        try {
+            jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
+                    .createContext(new Class[] {Company.class}, null);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(createCompanyObject(), new File("src\\main\\resources\\company.xml"));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+```
+
+### XML para objeto Java
+
+```Java
+
+      JAXBContext jaxbContext = null;
+      try {
+          jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
+                  .createContext(new Class[]{Company.class}, null);
+          File file = new File("src\\main\\resources\\company.xml");
+          Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+          Company o = (Company) jaxbUnmarshaller.unmarshal(file);
+          for (Staff staff : o.getList()) {
+        	  System.out.println(staff.toString());
+          }            
+      } catch (JAXBException e) {
+          e.printStackTrace();
+      }
+```
+
+
+### Validar um arquivo XML  
+
+Como mencionado, arquivos XSD são usados para verificar as informações de um arquivo XML. Um exemplo de como fazer essa verificação, está na [pasta](src/main/java/validarxml/) na classe [ValidarXml](src/main/java/validarxml/ValidarXml.java).
+
+```java
+	public class ValidarXml {	
+		
+		public void valida(File xml, File xsd) throws Exception{
+			Source schemaFile = new StreamSource(xsd);
+			Source xmlFile = new StreamSource(xml);
+			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Schema schema = schemaFactory.newSchema(schemaFile);
+			Validator validator = schema.newValidator();
+			validator.validate(xmlFile);
+		}
+	}
+```
+
+## Json - JavaScript Object Notation
+
+Json é um padrão usado para troca de dados entre sistemas que pode ser usado como alternativa de arquivos XML, dependendo do contexto que se deseja utilizar. Um Json é composto basicamente por chaves e valores associados a essas chaves. Um exemplo básico de estrutura pode ser vista abaixo. O valor a esquerda do **':'** são as chaves e a direita os valores.
+
+
+
+```Json
+	{
+		"texto" : "Abacate",
+		"numero" : 57,
+		"numeroReal" : 80.5,
+		"booleano": false,
+		"nulo": null
+	}
+```
+
+Uma forma de trabalhar com Json em Java é com a biblioteca **Gson()**. Na [pasta](/src/main/java/Json/) contém o exemplo de como transformar um arquivo Json em um objeto Java e vice-versa.
+
 ### Json para objeto Java
 
+```Java
+		Gson gson = new Gson();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\file.json"));
+			//Converte String JSON para objeto Java
+			Informacoes obj = gson.fromJson(br, Informacoes.class);
+			System.out.println(obj);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-### Objeto java para Json
+```
+
+### Objeto Java para Json 
+
+```Java
+	Informacoes obj = new Informacoes();
+	Gson gson = new Gson();
+	String json = gson.toJson(obj);
+	try {
+		FileWriter writer = new FileWriter("src\\main\\resources\\file.json");
+		writer.write(json);
+		writer.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	System.out.println(json);
+```
+
+
 
 
 ## Referências
