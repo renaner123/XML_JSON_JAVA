@@ -20,42 +20,42 @@
 Dependências necessárias para executar os exemplos que usam XML.
 
 ```xml
-    <dependencies>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-	  <dependency>
-	      <groupId>org.eclipse.persistence</groupId>
-	      <artifactId>org.eclipse.persistence.moxy</artifactId>
-	      <version>3.0.0</version>
-	  </dependency> 
+<dependencies>
+	<dependency>
+		<groupId>javax.xml.bind</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>2.3.1</version>
+	</dependency>
+	<dependency>
+		<groupId>com.sun.xml.bind</groupId>
+		<artifactId>jaxb-impl</artifactId>
+		<version>3.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.eclipse.persistence</groupId>
+		<artifactId>org.eclipse.persistence.moxy</artifactId>
+		<version>3.0.0</version>
+	</dependency> 
 ```
 
 Dependências necessárias para executar os exemplos usando Json.
 
 ```xml
-	<dependency>
-	    <groupId>javax.json</groupId>
-	    <artifactId>javax.json-api</artifactId>
-	    <version>1.1.4</version>
-	</dependency>	    
-	<dependency>
-	    <groupId>org.glassfish</groupId>
-	    <artifactId>javax.json</artifactId>
-	    <version>1.0.4</version>
-	</dependency>	  
-	<dependency>
-	    <groupId>com.google.code.gson</groupId>
-	    <artifactId>gson</artifactId>
-	    <version>2.8.9</version>
-	</dependency>	
+<dependency>
+	<groupId>javax.json</groupId>
+	<artifactId>javax.json-api</artifactId>
+	<version>1.1.4</version>
+</dependency>	    
+<dependency>
+	<groupId>org.glassfish</groupId>
+	<artifactId>javax.json</artifactId>
+	<version>1.0.4</version>
+</dependency>	  
+<dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>2.8.9</version>
+</dependency>	
 ```  
 
 Outras dependências e informações podem ser inseridas no arquivo [POM](src/../pom.xml). Os arquivos utilizados para os exemplos estão em [resources](src/main/resources/)
@@ -152,35 +152,34 @@ Fornece suporte a manipulação de objetos Java. "Sua principal característica 
 ### Objeto Java para XML
 
 ```Java
-        JAXBContext jaxbContext = null;
-        try {
-            jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
-                    .createContext(new Class[] {Company.class}, null);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            jaxbMarshaller.marshal(createCompanyObject(), new File("src\\main\\resources\\company.xml"));
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+JAXBContext jaxbContext = null;
+try {
+	jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
+			.createContext(new Class[] {Company.class}, null);
+	Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+	jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	jaxbMarshaller.marshal(createCompanyObject(), new File("src\\main\\resources\\company.xml"));
+} catch (JAXBException e) {
+	e.printStackTrace();
+}
 ```
 
 ### XML para objeto Java
 
 ```Java
-
-      JAXBContext jaxbContext = null;
-      try {
-          jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
-                  .createContext(new Class[]{Company.class}, null);
-          File file = new File("src\\main\\resources\\company.xml");
-          Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-          Company o = (Company) jaxbUnmarshaller.unmarshal(file);
-          for (Staff staff : o.getList()) {
-        	  System.out.println(staff.toString());
-          }            
-      } catch (JAXBException e) {
-          e.printStackTrace();
-      }
+JAXBContext jaxbContext = null;
+try {
+	jaxbContext = org.eclipse.persistence.jaxb.JAXBContextFactory
+			.createContext(new Class[]{Company.class}, null);
+	File file = new File("src\\main\\resources\\company.xml");
+	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+	Company o = (Company) jaxbUnmarshaller.unmarshal(file);
+	for (Staff staff : o.getList()) {
+		System.out.println(staff.toString());
+	}            
+} catch (JAXBException e) {
+	e.printStackTrace();
+}
 ```
 
 
@@ -189,17 +188,17 @@ Fornece suporte a manipulação de objetos Java. "Sua principal característica 
 Como mencionado, arquivos XSD são usados para verificar as informações de um arquivo XML. Um exemplo de como fazer essa verificação, está na [pasta](src/main/java/validarxml/) na classe [ValidarXml](src/main/java/validarxml/ValidarXml.java).
 
 ```java
-	public class ValidarXml {	
-		
-		public void valida(File xml, File xsd) throws Exception{
-			Source schemaFile = new StreamSource(xsd);
-			Source xmlFile = new StreamSource(xml);
-			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			Schema schema = schemaFactory.newSchema(schemaFile);
-			Validator validator = schema.newValidator();
-			validator.validate(xmlFile);
-		}
+public class ValidarXml {	
+	
+	public void valida(File xml, File xsd) throws Exception{
+		Source schemaFile = new StreamSource(xsd);
+		Source xmlFile = new StreamSource(xml);
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = schemaFactory.newSchema(schemaFile);
+		Validator validator = schema.newValidator();
+		validator.validate(xmlFile);
 	}
+}
 ```
 
 ## Json - JavaScript Object Notation
@@ -209,13 +208,13 @@ Json é um padrão usado para troca de dados entre sistemas que pode ser usado c
 
 
 ```Json
-	{
-		"texto" : "Abacate",
-		"numero" : 57,
-		"numeroReal" : 80.5,
-		"booleano": false,
-		"nulo": null
-	}
+{
+	"texto" : "Abacate",
+	"numero" : 57,
+	"numeroReal" : 80.5,
+	"booleano": false,
+	"nulo": null
+}
 ```
 
 Uma forma de trabalhar com Json em Java é com a biblioteca **Gson()**. Na [pasta](/src/main/java/Json/) contém o exemplo de como transformar um arquivo Json em um objeto Java e vice-versa.
@@ -223,36 +222,32 @@ Uma forma de trabalhar com Json em Java é com a biblioteca **Gson()**. Na [past
 ### Json para objeto Java
 
 ```Java
-		Gson gson = new Gson();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\file.json"));
-			//Converte String JSON para objeto Java
-			Informacoes obj = gson.fromJson(br, Informacoes.class);
-			System.out.println(obj);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+Gson gson = new Gson();
+try {
+	BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\file.json"));
+	//Converte String JSON para objeto Java
+	Informacoes obj = gson.fromJson(br, Informacoes.class);
+	System.out.println(obj);
+} catch (IOException e) {
+	e.printStackTrace();
+}
 ```
 
 ### Objeto Java para Json 
 
 ```Java
-	Informacoes obj = new Informacoes();
-	Gson gson = new Gson();
-	String json = gson.toJson(obj);
-	try {
-		FileWriter writer = new FileWriter("src\\main\\resources\\file.json");
-		writer.write(json);
-		writer.close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	System.out.println(json);
+Informacoes obj = new Informacoes();
+Gson gson = new Gson();
+String json = gson.toJson(obj);
+try {
+	FileWriter writer = new FileWriter("src\\main\\resources\\file.json");
+	writer.write(json);
+	writer.close();
+} catch (IOException e) {
+	e.printStackTrace();
+}
+System.out.println(json);
 ```
-
-
-
 
 ## Referências
 
