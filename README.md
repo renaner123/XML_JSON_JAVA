@@ -8,6 +8,8 @@
      * [XSD](#XSD)
      * [XML DOM](#XML-DOM---Document-Object-Model)
      * [JAXB](#JAXB)
+       *[Objeto Java para XML](#Objeto-Java-para-XML) 
+       *[XML para objeto Java](#XML-para-objeto-Java)
      * [Validar um arquivo XML](#Validar-um-arquivo-XML)
    * [Json](#Json---JavaScript-Object-Notation) 
      * [Json para objeto Java](#Json-para-objeto-Java)
